@@ -29,13 +29,13 @@ build-backend = "poetry.core.masonry.api"
 
 
 [tool.bandit]
-targets = ["ift_global"]
-exclude_dirs = ["ift_global/tests"]
+targets = ["fift_analytics"]
+exclude_dirs = ["fift_analytics/tests"]
 skips = ['B301', 'B105']
 
 
 [tool.pytest.ini_options]
-testpaths = "ift_global/tests/"
+testpaths = "fift_analytics/tests/"
 python_files = "test_*.py"
 
 [tool.ruff]
@@ -71,7 +71,7 @@ exclude = [
   "docs/sphinxext/*.py",
   "docs/build/*.py",
   "docs/temp/*.py",
-  "ift_global/tests/*.py",
+  "fift_analytics/tests/*.py",
   "__init__.py",
 ]
 
@@ -83,7 +83,7 @@ latest-tag = true
 format = "{base}"
 
 [tool.poetry-dynamic-versioning.substitution]
-files = ["ift_global/__init__.py"]
+files = ["fift_analytics/__init__.py"]
 patterns = [
     '''(^__version__\s*(?::.*?)?=\s*['"])[^'"]*(['"])''',
     { value = '''(^__version_tuple__\s*(?::.*?)?=\s*\()[^)]*(\))''', mode = "tuple" },
