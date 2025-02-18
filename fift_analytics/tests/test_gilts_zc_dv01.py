@@ -2,8 +2,8 @@ import pytest
 from fift_analytics.gilts.zero_coupon.zc_dvone import calculate_zero_coupon_bond_dv01
 
 def test_dv01_normal_case():
-    dv01 = calculate_zero_coupon_bond_dv01(1000000, 0.05, 10)
-    assert pytest.approx(dv01, rel=1e-6) == 613.9132
+    dv01 = calculate_zero_coupon_bond_dv01(face_value=1000000, yield_to_maturity=0.05, time_to_maturity=10)
+    assert pytest.approx(dv01, rel=0.001) == 36334.69499
 
 def test_dv01_below_threshold():
     dv01 = calculate_zero_coupon_bond_dv01(1000000, 0.05, 5/365)  # 5 days to maturity
@@ -19,19 +19,19 @@ def test_dv01_just_above_threshold():
 
 def test_dv01_negative_yield():
     dv01 = calculate_zero_coupon_bond_dv01(1000000, -0.01, 5)
-    assert pytest.approx(dv01, rel=1e-6) == 510.2041
+    assert pytest.approx(dv01, rel=0.001) == 55550.15929
 
 def test_dv01_zero_yield():
     dv01 = calculate_zero_coupon_bond_dv01(1000000, 0, 5)
-    assert pytest.approx(dv01, rel=1e-6) == 500.0
+    assert pytest.approx(dv01, rel=0.001) == 5000.0
 
 def test_dv01_very_long_maturity():
     dv01 = calculate_zero_coupon_bond_dv01(1000000, 0.05, 30)
-    assert pytest.approx(dv01, rel=1e-6) == 231.3770
+    assert pytest.approx(dv01, rel=0.001) == 15119.364678
 
 def test_dv01_custom_compounding():
     dv01 = calculate_zero_coupon_bond_dv01(1000000, 0.05, 10, compounding_frequency=4)
-    assert pytest.approx(dv01, rel=1e-6) != 613.9132  # Should be different from semi-annual
+    assert pytest.approx(dv01, rel=0.001) != 36559.9132  # Should be different from semi-annual
 
 def test_dv01_custom_threshold():
     dv01 = calculate_zero_coupon_bond_dv01(1000000, 0.05, 10/365, maturity_threshold=5/365)

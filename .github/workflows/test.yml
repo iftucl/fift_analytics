@@ -18,7 +18,7 @@ jobs:
       - name: Install Poetry
         run: pip install poetry
       - name: Install dependencies
-        run: poetry install --with test
+        run: poetry install --with tests
       - name: Run tests
         run: poetry run python -m pytest ./fift_analytics/tests --cov=fift_analytics --cov-report=xml --cov-report=term --cov-branch --junit-xml=report.xml
       - name: Upload coverage report

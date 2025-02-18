@@ -40,7 +40,7 @@ def calculate_zero_coupon_bond_dv01(
     if time_to_maturity <= 0:
         raise ValueError("Time to maturity must be positive.")
     # we return a zero for bond close to maturity    
-    if maturity_threshold < time_to_maturity:
+    if maturity_threshold > time_to_maturity:
         return 0
     # Convert annual yield to periodic yield
     periodic_yield = yield_to_maturity / compounding_frequency    
