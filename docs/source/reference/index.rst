@@ -20,12 +20,5 @@ In general,
    :toctree: generated/
 
    fift_analytics
+   fift_analytics.zero_coupon
 
-
-.. toctree::
-    :maxdepth: 1
-    :hidden:
-    :titlesonly:
-
-    fift_analytics <main_namespace>
-    fift_analytics.email <email_functionality>

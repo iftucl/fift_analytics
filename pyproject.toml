@@ -16,12 +16,17 @@ sphinx = "^8.1.3"
 pydata-sphinx-theme = "^0.16.1"
 sphinx-design = "^0.6.1"
 ipython = "^8.32.0"
+sphinx-pydantic = "^0.1.1"
 
 [tool.poetry.group.tests.dependencies]
 ruff = "^0.9.6"
 black = "^25.1.0"
 codespell = "^2.4.1"
 bandit = "^1.8.3"
+pytest-cov = "^6.0.0"
+pytest-mock = "^3.14.0"
+pytest-xdist = "^3.6.1"
+pytest = "^8.3.4"
 
 [build-system]
 requires = ["poetry-core"]
@@ -29,13 +34,13 @@ build-backend = "poetry.core.masonry.api"
 
 
 [tool.bandit]
-targets = ["ift_global"]
-exclude_dirs = ["ift_global/tests"]
+targets = ["fift_analytics"]
+exclude_dirs = ["fift_analytics/tests"]
 skips = ['B301', 'B105']
 
 
 [tool.pytest.ini_options]
-testpaths = "ift_global/tests/"
+testpaths = "fift_analytics/tests/"
 python_files = "test_*.py"
 
 [tool.ruff]
@@ -71,7 +76,7 @@ exclude = [
   "docs/sphinxext/*.py",
   "docs/build/*.py",
   "docs/temp/*.py",
-  "ift_global/tests/*.py",
+  "fift_analytics/tests/*.py",
   "__init__.py",
 ]
 
@@ -83,7 +88,7 @@ latest-tag = true
 format = "{base}"
 
 [tool.poetry-dynamic-versioning.substitution]
-files = ["ift_global/__init__.py"]
+files = ["fift_analytics/__init__.py"]
 patterns = [
     '''(^__version__\s*(?::.*?)?=\s*['"])[^'"]*(['"])''',
     { value = '''(^__version_tuple__\s*(?::.*?)?=\s*\()[^)]*(\))''', mode = "tuple" },

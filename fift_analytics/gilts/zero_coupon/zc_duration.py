@@ -1,4 +1,5 @@
-from typing import Optional, Literal
+from typing import Optional, Literal, Annotated
+from annotated_types import Gt
 from pydantic import validate_call
 
 @validate_call
@@ -6,7 +7,7 @@ def calculate_zero_coupon_bond_duration(
     time_to_maturity: float,
     ytm: float,
     duration_type: Literal["Macaulay", "Modified"],
-    compounding_frequency: Optional[int] = None
+    compounding_frequency: Annotated[Optional[int], Gt(0)] = None
 ) -> dict:
     """
     Calculate the Macaulay or Modified durations of a zero-coupon bond, allowing for negative yields.

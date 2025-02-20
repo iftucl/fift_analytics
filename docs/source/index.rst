@@ -57,7 +57,7 @@ it provides a series of abstraction and functionalities to build the main proces
 
         +++
 
-        .. button-ref:: iftanalytics-reference
+        .. button-ref:: fiftanalytics-reference
             :color: secondary
             :click-parent:
 
@@ -76,7 +76,7 @@ it provides a series of abstraction and functionalities to build the main proces
 
         +++
 
-        .. button-ref:: iftanalytics-guides
+        .. button-ref:: fiftanalytics-guides
             :color: secondary
             :click-parent:
 
@@ -95,7 +95,7 @@ it provides a series of abstraction and functionalities to build the main proces
 
         +++
 
-        .. button-ref:: iftglobal-development
+        .. button-ref:: fiftanalytics-development
             :color: secondary
             :click-parent:
 
