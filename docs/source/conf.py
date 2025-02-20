@@ -44,7 +44,6 @@ default_colours = {"main": "#8a1047"}
 
 extensions = [
     "sphinx.ext.autodoc",
-    "sphinx.ext.autodoc",
     "sphinx.ext.autosummary",
     "sphinx.ext.coverage",
     "sphinx.ext.mathjax",

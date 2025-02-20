@@ -19,9 +19,15 @@ This python package delivers the main abstraction utilities to perform analytics
 Public API
 ----------
 
-Main Features:
+The modules exported within this document are considered part of the :py:mod:`fift_analytics` public api and are maintained and stable abstraction ready to use.
 
-- GILTS Zero Coupon Bond: main methods to perform analytics on Zero Coupon GILTS
+Main Features
+-------------
+::
+
+ zero_coupon                -- Abstraction for Zero Coupon Gilts
+
+
 
 """
 

@@ -13,9 +13,9 @@ Here, you will find a detailed guide of the main public API developed within thi
 .. button-ref:: fiftanalytics-zc
 
 .. toctree::
-    :maxdepth: 2
+    :maxdepth: 1
     :hidden:
     :titlesonly:
 
-    zero_coupon
+    zero_coupon/index
     

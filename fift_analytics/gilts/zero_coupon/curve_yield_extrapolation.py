@@ -2,15 +2,15 @@
 Extrapolate Zero Coupon Curve
 ==============================
 
-Formula
-^^^^^^^
+.. currentmodule:: fift_analytics.gilts.zero_coupon.curve_yield_extrapolation
 
-y = y1 + (t - t1) * (y2 - y1) / (t2 - t1)
+These functions are used to interpolate or extrapolate yields from
+zero coupon bond curve.
 
-Interpolates between two maturities.
+.. autosummary::
+   :toctree: generated/
 
-- for maturities less than 3 months, uses 3 months.
-- for maturities greater than largest tenor point on the curve, it extrapolates.
+   derive_yield_from_zero_curve
 
 """
 from pydantic import validate_call
@@ -22,6 +22,15 @@ def derive_yield_from_zero_curve(
 ) -> float:
     """
     Derive the implicit yield for a given maturity using a zero-coupon bond curve.
+
+    :Formula:
+    .. math:: y = y1 + ((t - t1) * (y2 - y1)) / (t2 - t1)
+
+    Interpolates between two maturities.
+
+    - for maturities less than 3 months, uses 3 months.
+    - for maturities greater than largest tenor point on the curve, it extrapolates.
+
     
     :param zero_curve: A list of tuples representing the zero-coupon bond curve.
                        Each tuple contains (maturity_in_months, annual_yield).
@@ -32,7 +41,7 @@ def derive_yield_from_zero_curve(
     :return: The interpolated or extrapolated yield for the given maturity.
     :rtype: float
     
-    :Example::
+    :Example:
         >>> zero_curve = [(3, 0.01), (6, 0.015), (12, 0.02), (18, 0.025)]
         >>> derive_yield_from_zero_curve(zero_curve, 9)
         0.0175

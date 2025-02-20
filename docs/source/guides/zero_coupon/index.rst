@@ -13,6 +13,8 @@ Here, you will find a detailed guide of the zero coupon bonds public API develop
 .. toctree::
     :maxdepth: 1
     :titlesonly:
-
+    
+    Pricing <pricing>
     DV01 <dvone>
+    Duration <duration>
     
