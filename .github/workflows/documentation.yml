@@ -13,7 +13,6 @@ permissions:
 
 jobs:
   build:
-    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     container:
       image: python:3.10
