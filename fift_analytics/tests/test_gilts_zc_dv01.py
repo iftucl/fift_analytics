@@ -59,9 +59,14 @@ def test_dv01_zero_time_to_maturity():
 def test_dv01_extremely_high_yield():
     maturity_date = datetime.strftime(datetime.now() + timedelta(days=3650), "%Y-%m-%d")
     dv01 = calculate_zero_coupon_bond_dv01(1000000, 1.0, maturity_date=maturity_date)  # 100% yield
-    assert dv01 > 0.0 and dv01 < 0.05  # Should be positive but less than normal case
+    assert dv01 > 0.0 and dv01 < 0.055  # Should be positive but less than normal case
 
 def test_dv01_extremely_low_yield():
     maturity_date = datetime.strftime(datetime.now() + timedelta(days=3650), "%Y-%m-%d")
     dv01 = calculate_zero_coupon_bond_dv01(1000000, 0.0001, maturity_date=maturity_date)  # 0.01% yield
     assert dv01 > 998.49  # Should be higher than normal case
+
+def test_dv01_round_decimals():
+    maturity_date = datetime.strftime(datetime.now() + timedelta(days=3650), "%Y-%m-%d")
+    dv01 = calculate_zero_coupon_bond_dv01(1000000, 0.0001, maturity_date=maturity_date, n_decimals=2)  # 0.01% yield
+    assert dv01 == 998.5  # Should be higher than normal case

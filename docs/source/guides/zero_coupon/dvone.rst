@@ -12,15 +12,11 @@ The DV01 measures the change in the bond’s price due to a one-basis point (0.0
 
 The formula for DV01 can be expressed as:
 
-.. math:
-
-    DV01 = Modified Duration * P * 0.0001
+.. math:: DV01 = Modified Duration * P * 0.0001
 
 where the Modified Duration represents
 
-.. math:
-
-    Modified Duration = Macaulay Duration / (1 + r / n)
+.. math:: ModifiedDuration = \frac{Macaulay Duration}{(1 + \frac{r}{n})}
 
 
 DV01 implementation
@@ -44,25 +40,22 @@ Suppose you want to calculate the DV01 for a zero coupon gilt at face value of 1
     from fift_analytics.gilts.zero_coupon import calculate_zero_coupon_bond_dv01
     from datetime import datetime, timedelta
 
-    maturity_date = datetime.strftime(datetime.now() + timedelta(days=3650), "%Y-%m-%d")
-    dv01 = calculate_zero_coupon_bond_dv01(1000000, 0.01, maturity_date=maturity_date)
-    print(dv01)
+    maturity_date = datetime.strftime(datetime.now() + timedelta(days=365), "%Y-%m-%d")
+    dv01 = calculate_zero_coupon_bond_dv01(1000000, 0.01, maturity_date=maturity_date, n_decimals=2)
+    print(f"DV01 of the zero-coupon bond: ${dv01:.2f}")
 
-Which would be as calculating separately the two bonds prices and provide the difference:
+Which would be as to calculate the two bonds prices and provide the difference:
 
 .. ipython:: python
     
     from fift_analytics.gilts.zero_coupon.zc_pricers import get_zero_coupon_gilt_price
-    from datetime import datetime, timedelta
-
-    maturity_date = datetime.strftime(datetime.now() + timedelta(days=3650), "%Y-%m-%d")
 
     bond_price = get_zero_coupon_gilt_price(1000000, 0.01, maturity_date=maturity_date)
-    print(bond_price)
+    print(f"The bond price is: ${bond_price:.2f}")
     bond_price_shifted = get_zero_coupon_gilt_price(1000000, 0.0101, maturity_date=maturity_date)
-    print(bond_price_shifted)
+    print(f"The shifted bond price is: ${bond_price_shifted:.2f}")
     diff = bond_price - bond_price_shifted
-    print(diff)
+    print(f"DV01 of the zero-coupon bond: ${diff:.2f}")
 
 For a zero-coupon bond with a yield of zero, the DV01 (Dollar Value of 01) would be closely related to its duration. Let’s break it down:
 
@@ -70,13 +63,14 @@ For a zero-coupon bond with a yield of zero, the DV01 (Dollar Value of 01) would
 
     from fift_analytics.gilts.zero_coupon import calculate_zero_coupon_bond_dv01
     from fift_analytics.gilts.zero_coupon.zc_duration import calculate_zero_coupon_bond_duration    
-    from datetime import datetime, timedelta
 
-    maturity_date = datetime.strftime(datetime.now() + timedelta(days=3650), "%Y-%m-%d")
     dv01 = calculate_zero_coupon_bond_dv01(1000000, 0, maturity_date=maturity_date)
-    print(dv01 / 10)
-    bond_duration = calculate_zero_coupon_bond_duration(10, 0, "Modified", 2)
-    print(bond_duration)
+    print(f"DV01 of the zero-coupon bond: ${dv01:.2f}")
+    
+    bond_duration = calculate_zero_coupon_bond_duration(1, 0, "Modified", 2)
+    bond_price = get_zero_coupon_gilt_price(1000000, 0.01, maturity_date=maturity_date)
+    approx_dv01 = bond_duration * bond_price * 0.0001
+    print(f"Approximation DV01 of the zero-coupon bond: ${approx_dv01:.2f}")
 
 Steps:
 

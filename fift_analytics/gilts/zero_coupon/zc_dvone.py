@@ -4,9 +4,10 @@ DV01 Zero Coupon
 
 DV01, the dollar change in the bond's value for a 1 basis point change in yield.
 
-Implementation of:
+Current implementation relies on:
 
-DV01 = T / [100(1 + y/2)^(2T + 1)]
+- Valuate Bond Price at provided yield
+- Revaluate Bond Price at Provided Yield + 1bps
 
 """
 
@@ -21,7 +22,8 @@ def calculate_zero_coupon_bond_dv01(
     yield_to_maturity: float,
     maturity_date: str,
     settlement_date: Optional[str] = None,
-    maturity_threshold: float = 7/365
+    maturity_threshold: float = 7/365,
+    n_decimals: int | None = None
 ) -> float:
     """
     Calculate the DV01 of a zero-coupon bond using the get_zero_coupon_gilt_price function.
@@ -31,6 +33,7 @@ def calculate_zero_coupon_bond_dv01(
     :param maturity_date: The maturity date of the bond in 'YYYY-MM-DD' format.
     :param settlement_date: The settlement date in 'YYYY-MM-DD' format. Defaults to today if not provided.
     :param maturity_threshold: Threshold (in years) below which DV01 is considered zero (default is 7 days).
+    :param n_decimals: Decimal precision of the returned dv01.
     :return: DV01 of the zero-coupon bond.
     """
     # Calculate time to maturity
@@ -54,6 +57,11 @@ def calculate_zero_coupon_bond_dv01(
 
     # Calculate DV01
     dv01 = price - price_up
-
+    
+    if not n_decimals:
+        return round(dv01, 2)
+    
     return dv01
+
+    
 
