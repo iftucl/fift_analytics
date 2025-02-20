@@ -1,10 +1,12 @@
 name: Documentation
 
 on:
-  pull_request:
-    types: [closed]
+  push:
     branches:
-      - main
+      - main    
+  pull_request:
+    types: [closed, opened]
+    branches: ['*']
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
@@ -34,6 +36,7 @@ jobs:
 
   # Deployment job
   deploy:
+    if: ${{ github.event.pull_request.merged == true }}
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
