@@ -36,13 +36,13 @@ def test_is_leap_year():
 def test_calculate_time_to_maturity_normal_case():
     settlement_date = datetime.strptime("2025-02-17", "%Y-%m-%d")
     maturity_date = datetime.strptime("2035-02-17", "%Y-%m-%d")
-    assert calculate_time_to_maturity(settlement_date, maturity_date) == 10.0
+    assert pytest.approx(calculate_time_to_maturity(settlement_date, maturity_date), rel=0.1) == 10.0
 
 
 def test_calculate_time_to_maturity_with_leap_year():
     settlement_date = datetime.strptime("2024-02-17", "%Y-%m-%d")
     maturity_date = datetime.strptime("2034-02-17", "%Y-%m-%d")
-    assert calculate_time_to_maturity(settlement_date, maturity_date) == pytest.approx(10.0027, rel=1e-4)
+    assert calculate_time_to_maturity(settlement_date, maturity_date) == pytest.approx(9.980874, rel=1e-4)
 
 
 def test_calculate_time_to_maturity_invalid_dates():

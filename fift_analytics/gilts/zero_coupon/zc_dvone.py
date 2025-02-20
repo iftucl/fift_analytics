@@ -10,46 +10,50 @@ DV01 = T / [100(1 + y/2)^(2T + 1)]
 
 """
 
-import math
+from datetime import datetime
+from typing import Optional
+
+from fift_analytics.gilts.zero_coupon.zc_pricers import get_zero_coupon_gilt_price
+
 
 def calculate_zero_coupon_bond_dv01(
-        face_value: float,
-        yield_to_maturity: float,
-        time_to_maturity: float,
-        compounding_frequency: int = 2,
-        maturity_threshold: float = 7/365
-    ) -> float:
+    face_value: float,
+    yield_to_maturity: float,
+    maturity_date: str,
+    settlement_date: Optional[str] = None,
+    maturity_threshold: float = 7/365
+) -> float:
     """
-    Calculate the DV01 of a zero-coupon bond.
+    Calculate the DV01 of a zero-coupon bond using the get_zero_coupon_gilt_price function.
     
     :param face_value: Face value of the bond.
     :param yield_to_maturity: Annual yield to maturity as a decimal (e.g., 0.05 for 5%).
-    :param time_to_maturity: Time to maturity in years.
-    :param compounding_frequency: Number of compounding periods per year (default is 2 for semi-annual).
-    :param maturity_threshold: Threshold (in years) below which DV01 is considered zero (default is 7 days).    
+    :param maturity_date: The maturity date of the bond in 'YYYY-MM-DD' format.
+    :param settlement_date: The settlement date in 'YYYY-MM-DD' format. Defaults to today if not provided.
+    :param maturity_threshold: Threshold (in years) below which DV01 is considered zero (default is 7 days).
     :return: DV01 of the zero-coupon bond.
-
-    :Example:
-        >>> from fift_analytics.gilts import calculate_zero_coupon_bond_dv01
-        >>> face_value = 1000000  # $1 million
-        >>> yield_to_maturity = 0.05  # 5%
-        >>> time_to_maturity = 10  # 10 years
-        >>> dv01 = calculate_zero_coupon_bond_dv01(face_value, yield_to_maturity, time_to_maturity)
-        >>> print(f"DV01 of the zero-coupon bond: ${dv01:.2f}")
     """
+    # Calculate time to maturity
+    if settlement_date is None:
+        settlement_date = datetime.now().strftime('%Y-%m-%d')
+    settlement_date_obj = datetime.strptime(settlement_date, '%Y-%m-%d')
+    maturity_date_obj = datetime.strptime(maturity_date, '%Y-%m-%d')
+    time_to_maturity = (maturity_date_obj - settlement_date_obj).days / 365.0
+
     if time_to_maturity <= 0:
         raise ValueError("Time to maturity must be positive.")
-    # we return a zero for bond close to maturity    
-    if maturity_threshold > time_to_maturity:
-        return 0
-    # Convert annual yield to periodic yield
-    periodic_yield = yield_to_maturity / compounding_frequency    
-    # Calculate the number of compounding periods
-    n = time_to_maturity * compounding_frequency    
-    # Calculate the price of the bond
-    price = face_value / math.pow(1 + periodic_yield, n)    
-    # Calculate DV01
-    dv_one = (time_to_maturity * price) / (100 * math.pow(1 + periodic_yield, n + 1))
     
-    return dv_one
+    if time_to_maturity <= maturity_threshold:
+        return 0.0
+
+    # Calculate the current price
+    price = get_zero_coupon_gilt_price(face_value, yield_to_maturity, maturity_date, settlement_date)
+
+    # Calculate price after 1bp increase in yield
+    price_up = get_zero_coupon_gilt_price(face_value, yield_to_maturity + 0.0001, maturity_date, settlement_date)
+
+    # Calculate DV01
+    dv01 = price - price_up
+
+    return dv01
 
