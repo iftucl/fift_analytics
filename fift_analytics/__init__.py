@@ -8,7 +8,7 @@ __version_tuple__ = (0, 0, 0)
 
 __doc__ = """
 fift_analytics python package
-=========================
+==============================
 
 Python package developed and maintained by Big Data in Quantitative Finance
 Institute for Finance and Technology - University College London.

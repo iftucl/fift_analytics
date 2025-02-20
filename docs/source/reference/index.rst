@@ -28,4 +28,4 @@ In general,
     :titlesonly:
 
     fift_analytics <main_namespace>
-    fift_analytics.email <email_functionality>
+    fift_analytics.gilts.zero_coupon <gilt_zero_coupon>
